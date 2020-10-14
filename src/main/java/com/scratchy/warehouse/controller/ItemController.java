@@ -11,4 +11,9 @@ public class ItemController {
         return "welcome-page";
     }
 
+    @GetMapping("/form")
+    public String formPage(){
+        return "form-page";
+    }
+
 }

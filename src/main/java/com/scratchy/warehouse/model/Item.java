@@ -19,6 +19,8 @@ public class Item {
     @Field(value = "count")
     private int count;
 
+    public Item() {}
+
     public Item(String name, int count) {
         this.name = name;
         this.count = count;

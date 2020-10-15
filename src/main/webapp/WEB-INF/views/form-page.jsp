@@ -21,10 +21,9 @@
                 <tb><form:input path="count" /></tb>
             </tr>
             <tr>
-            <td><input type="submit" value="Save"/></td>
+                <td><input type="submit" value="Save"/></td>
             </tr>
         </table>
-        
     </form:form>
 </body>
 </html>

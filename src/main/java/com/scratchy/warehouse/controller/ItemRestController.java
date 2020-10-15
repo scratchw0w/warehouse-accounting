@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -42,7 +41,7 @@ public class ItemRestController {
     }
 
     @PostMapping("items")
-    public void addItem(@RequestAttribute("newItem") Item newItem) {
+    public void addItem(@ModelAttribute("newItem") Item newItem) {
         String name = newItem.getName();
         newItem.setName(name.toLowerCase());
         dataBase.insert(newItem, "itemData");

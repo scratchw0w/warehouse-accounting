@@ -1,13 +1,10 @@
 package com.scratchy.warehouse.controller;
 
-import com.scratchy.warehouse.dao.ItemDao;
 import com.scratchy.warehouse.model.Item;
+import com.scratchy.warehouse.service.ItemService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,7 +19,7 @@ import java.util.List;
 public class ItemRestController {
 
     @Autowired
-    ItemDao itemDatabase;
+    ItemService itemDatabase;
 
     @GetMapping("items")
     public List<Item> getItems() {
@@ -40,8 +37,10 @@ public class ItemRestController {
     }
 
     @PutMapping("items/{item_name}")
-    public void updateItemByName(@PathVariable("item_name") String updatingEntityName, @ModelAttribute("item") Item newItem) {
-        itemDatabase.updateItemByName(updatingEntityName, newItem); }
+    public void updateItemByName(@PathVariable("item_name") String oldItemName,
+        @ModelAttribute("item") Item newItem) {
+        itemDatabase.updateItemByName(oldItemName, newItem); 
+    }
 
     @DeleteMapping("items/{item_name}")
     public void deleteItemByName(@PathVariable("item_name") String name) {

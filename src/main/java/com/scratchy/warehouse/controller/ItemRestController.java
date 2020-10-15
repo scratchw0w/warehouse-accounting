@@ -9,9 +9,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,37 +33,33 @@ public class ItemRestController {
         return items;
     }
 
-    // TODO: ignore case
     @GetMapping("items/{item_name}")
     public Item getItemByName(@PathVariable("item_name") String name){
+        name = name.toLowerCase();
         Item item = dataBase.findOne(Query.query(Criteria.where("name").is(name)), Item.class);
         System.out.println(item);
         return item;
     }
 
-    // TODO:
     @PostMapping("items")
-    public void addItem(Item item) {
-        if(item == null){
-            System.out.println("No item exists!");
-            return;
-        }
-        dataBase.insert(item, "itemData");
+    public void addItem(@RequestAttribute("newItem") Item newItem) {
+        String name = newItem.getName();
+        newItem.setName(name.toLowerCase());
+        dataBase.insert(newItem, "itemData");
     }
 
-    // TODO:
     @PutMapping("items/{item_name}")
-    public void updateItemByName(@PathVariable("item_name") String updatingEntityName) {
-        Item anotherItem = new Item("Laptop", 10);
+    public void updateItemByName(@PathVariable("item_name") String updatingEntityName, @ModelAttribute("item") Item newItem) {
+        updatingEntityName = updatingEntityName.toLowerCase();
         Update update = new Update();
-        update.set("name", anotherItem.getName());
-        update.set("count", anotherItem.getCount());
+        update.set("name", newItem.getName());
+        update.set("count", newItem.getCount());
         dataBase.updateFirst(Query.query(Criteria.where("name").is(updatingEntityName)), update, Item.class);
     }
 
-    // TODO: ignore case
     @DeleteMapping("items/{item_name}")
     public void deleteItemByName(@PathVariable("item_name") String name) {
+        name = name.toLowerCase();
         dataBase.remove(Query.query(Criteria.where("name").is(name)), Item.class);
     }
 

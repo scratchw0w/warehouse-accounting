@@ -1,5 +1,6 @@
 package com.scratchy.warehouse.controller;
 
+import com.scratchy.warehouse.dao.ItemDao;
 import com.scratchy.warehouse.model.Item;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,45 +22,30 @@ import java.util.List;
 public class ItemRestController {
 
     @Autowired
-    MongoTemplate dataBase;
+    ItemDao itemDatabase;
 
     @GetMapping("items")
     public List<Item> getItems() {
-        List<Item> items = dataBase.findAll(Item.class);
-        for (Item tempItem : items) {
-            System.out.println(tempItem);
-        }
-        return items;
+        return itemDatabase.getItems();
     }
 
     @GetMapping("items/{item_name}")
     public Item getItemByName(@PathVariable("item_name") String name){
-        name = name.toLowerCase();
-        Item item = dataBase.findOne(Query.query(Criteria.where("name").is(name)), Item.class);
-        System.out.println(item);
-        return item;
+        return itemDatabase.getItemByName(name);
     }
 
     @PostMapping("items")
     public void addItem(@ModelAttribute("newItem") Item newItem) {
-        String name = newItem.getName();
-        newItem.setName(name.toLowerCase());
-        dataBase.insert(newItem, "itemData");
+        itemDatabase.addItem(newItem);
     }
 
     @PutMapping("items/{item_name}")
     public void updateItemByName(@PathVariable("item_name") String updatingEntityName, @ModelAttribute("item") Item newItem) {
-        updatingEntityName = updatingEntityName.toLowerCase();
-        Update update = new Update();
-        update.set("name", newItem.getName());
-        update.set("count", newItem.getCount());
-        dataBase.updateFirst(Query.query(Criteria.where("name").is(updatingEntityName)), update, Item.class);
-    }
+        itemDatabase.updateItemByName(updatingEntityName, newItem); }
 
     @DeleteMapping("items/{item_name}")
     public void deleteItemByName(@PathVariable("item_name") String name) {
-        name = name.toLowerCase();
-        dataBase.remove(Query.query(Criteria.where("name").is(name)), Item.class);
+        itemDatabase.deleteItemByName(name);
     }
 
 }

@@ -36,9 +36,11 @@ public class ItemRestController {
         itemDatabase.addItem(newItem);
     }
 
+    /* TODO: 
+    *****************************************************************/ 
     @PutMapping("items/{item_name}")
     public void updateItemByName(@PathVariable("item_name") String oldItemName,
-        @ModelAttribute("item") Item newItem) {
+        @ModelAttribute("newItem") Item newItem) {
         itemDatabase.updateItemByName(oldItemName, newItem); 
     }
 

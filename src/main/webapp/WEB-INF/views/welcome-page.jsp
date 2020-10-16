@@ -6,13 +6,15 @@
     <title>warehouse-accounting</title>
 </head>
 <body>
-    <h1>Welcome to warehouse-accounting!</h1>
+    <div>
+      <h1>Welcome to warehouse-accounting!</h1>
     
-    <a href="/items">Get all items</a> <br>
-    <a href="">Get item by name</a> <br>
-    <a href="/form">Add new Item</a> <br>
-    <a href="">Update existing item</a> <br>
-    <a href="">Delete existing item</a> <br>
-
+      <a href="/items">Get all items</a> <br>
+      <a href="/addItem">Add new Item</a> <br>
+      <a href="/updateItem">Update existing item</a> <br>
+    </div>
+    <div>
+      <h5>To get (GET Method) or delete (DELETE Method) an item, just enter: /items/{item_name}</h5>
+    </div>
 </body>
 </html>

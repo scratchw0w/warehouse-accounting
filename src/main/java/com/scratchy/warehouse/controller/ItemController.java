@@ -14,10 +14,15 @@ public class ItemController {
         return "welcome-page";
     }
 
-    @GetMapping("/form")
-    public String formPage(Model theModel){
+    @GetMapping("/addItem")
+    public String addFormPage(Model theModel){
         theModel.addAttribute("newItem", new Item());
-        return "form-page";
+        return "add-form-page";
+    }
+
+    @GetMapping("/updateItem")
+    public String updateFormPage(){
+        return "update-form-page";
     }
 
 }

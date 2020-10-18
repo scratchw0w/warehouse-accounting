@@ -25,13 +25,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void addItem(Item newItem) {
-        itemDao.addItem(newItem);
+    public Item addItem(Item newItem) {
+        return itemDao.addItem(newItem);
     }
 
     @Override
-    public void updateItemByName(String oldItemName, Item newItem) {
-        itemDao.updateItemByName(oldItemName, newItem);
+    public Item updateItemByName(Item newItem) {
+        return itemDao.updateItemByName(newItem);
     }
 
     @Override

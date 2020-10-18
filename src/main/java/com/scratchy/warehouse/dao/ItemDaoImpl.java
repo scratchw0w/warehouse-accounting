@@ -31,19 +31,19 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public void addItem(Item newItem) {
+    public Item addItem(Item newItem) {
         String name = newItem.getName();
         newItem.setName(name.toLowerCase());
-        dataBase.insert(newItem, "itemData");
+        return dataBase.insert(newItem, "itemData");
     }
 
     @Override
-    public void updateItemByName(String oldItemName, Item newItem) {
-        oldItemName = oldItemName.toLowerCase();
+    public Item updateItemByName(Item newItem) {
+        Item previousItem = dataBase.findOne(Query.query(Criteria.where(newItem.getName().toLowerCase())), Item.class);
         Update update = new Update();
-        update.set("name", newItem.getName());
         update.set("count", newItem.getCount());
-        dataBase.updateFirst(Query.query(Criteria.where("name").is(oldItemName)), update, Item.class);
+        dataBase.updateFirst(Query.query(Criteria.where("_id").is(previousItem.getId())), update, Item.class);
+        return getItemByName(newItem.getName().toLowerCase());
     }
 
     @Override

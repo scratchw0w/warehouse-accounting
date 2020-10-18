@@ -21,7 +21,8 @@ public class ItemController {
     }
 
     @GetMapping("/updateItem")
-    public String updateFormPage(){
+    public String updateFormPage(Model theModel){
+        theModel.addAttribute("newItem", new Item());
         return "update-form-page";
     }
 

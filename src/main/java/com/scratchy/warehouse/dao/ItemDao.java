@@ -8,8 +8,8 @@ public interface ItemDao {
 
     public List<Item> getItems();
     public Item getItemByName(String name);
-    public void addItem(Item newItem);
-    public void updateItemByName(String oldItemName, Item newItem);
+    public Item addItem(Item newItem);
+    public Item updateItemByName(Item newItem);
     public void deleteItemByName(String name);
     
 }

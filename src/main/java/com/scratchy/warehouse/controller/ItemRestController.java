@@ -32,16 +32,17 @@ public class ItemRestController {
     }
 
     @PostMapping("items")
-    public void addItem(@ModelAttribute("newItem") Item newItem) {
-        itemDatabase.addItem(newItem);
+    public Item addItem(@ModelAttribute("newItem") Item newItem) {
+        System.out.println("In add section");
+        return itemDatabase.addItem(newItem);
     }
 
     /* TODO: 
-    *****************************************************************/ 
-    @PutMapping("items/{item_name}")
-    public void updateItemByName(@PathVariable("item_name") String oldItemName,
-        @ModelAttribute("newItem") Item newItem) {
-        itemDatabase.updateItemByName(oldItemName, newItem); 
+    **************************************************************     Why do this link transfers to addItem?     ***/ 
+    @PutMapping("items")
+    public Item updateItemByName(@ModelAttribute("newItem") Item newItem) {
+        System.out.println("In update section");
+        return itemDatabase.updateItemByName(newItem); 
     }
 
     @DeleteMapping("items/{item_name}")

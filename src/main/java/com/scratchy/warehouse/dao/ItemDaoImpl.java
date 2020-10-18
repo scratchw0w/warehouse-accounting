@@ -25,31 +25,31 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public Item getItemByName(String name) {
-        name = name.toLowerCase();
-        Item item = dataBase.findOne(Query.query(Criteria.where("name").is(name)), Item.class);
+        Item item = dataBase.findOne(Query.query(Criteria.where("name").is(stringToLowerCase(name))), Item.class);
         return item;
     }
 
     @Override
-    public Item addItem(Item newItem) {
-        String name = newItem.getName();
-        newItem.setName(name.toLowerCase());
-        return dataBase.insert(newItem, "itemData");
+    public void addItem(Item newItem) {
+        newItem.setName(stringToLowerCase(newItem.getName()));
+        dataBase.insert(newItem, "itemData");
     }
 
     @Override
-    public Item updateItemByName(Item newItem) {
-        Item previousItem = dataBase.findOne(Query.query(Criteria.where(newItem.getName().toLowerCase())), Item.class);
+    public void updateItemByName(Item updatedItem) {
+        String nameOfItemToUpdate = stringToLowerCase(updatedItem.getName());
         Update update = new Update();
-        update.set("count", newItem.getCount());
-        dataBase.updateFirst(Query.query(Criteria.where("_id").is(previousItem.getId())), update, Item.class);
-        return getItemByName(newItem.getName().toLowerCase());
+        update.set("count", updatedItem.getCount());
+        dataBase.updateFirst(Query.query(Criteria.where("name").is(nameOfItemToUpdate)), update, Item.class);
     }
 
     @Override
     public void deleteItemByName(String name) {
-        name = name.toLowerCase();
-        dataBase.remove(Query.query(Criteria.where("name").is(name)), Item.class);
+        dataBase.remove(Query.query(Criteria.where("name").is(stringToLowerCase(name))), Item.class);
+    }
+
+    private String stringToLowerCase(String sourceString){
+        return sourceString.toLowerCase();
     }
     
 }

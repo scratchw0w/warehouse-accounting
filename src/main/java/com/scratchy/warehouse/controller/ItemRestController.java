@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,32 +21,33 @@ public class ItemRestController {
     @Autowired
     ItemService itemDatabase;
 
-    @GetMapping("items")
+    @GetMapping("api/items")
     public List<Item> getItems() {
+        System.out.println("In get section");
         return itemDatabase.getItems();
     }
 
-    @GetMapping("items/{item_name}")
+    @GetMapping("api/items/{item_name}")
     public Item getItemByName(@PathVariable("item_name") String name){
+        System.out.println("In get/{id} section");
         return itemDatabase.getItemByName(name);
     }
 
-    @PostMapping("items")
-    public Item addItem(@ModelAttribute("newItem") Item newItem) {
+    @PostMapping("api/items")
+    public void addItem(@RequestBody Item newItem) {
         System.out.println("In add section");
-        return itemDatabase.addItem(newItem);
+        itemDatabase.addItem(newItem);
     }
 
-    /* TODO: 
-    **************************************************************     Why do this link transfers to addItem?     ***/ 
-    @PutMapping("items")
-    public Item updateItemByName(@ModelAttribute("newItem") Item newItem) {
-        System.out.println("In update section");
-        return itemDatabase.updateItemByName(newItem); 
+    @PutMapping("api/items")
+    public void updateItemByName(@RequestBody Item updatedItem) {
+        System.out.println("In put section");
+        itemDatabase.updateItemByName(updatedItem); 
     }
 
-    @DeleteMapping("items/{item_name}")
+    @DeleteMapping("api/items/{item_name}")
     public void deleteItemByName(@PathVariable("item_name") String name) {
+        System.out.println("In delete section");
         itemDatabase.deleteItemByName(name);
     }
 

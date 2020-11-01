@@ -23,31 +23,26 @@ public class ItemRestController {
 
     @GetMapping("api/items")
     public List<Item> getItems() {
-        System.out.println("In get section");
         return itemDatabase.getItems();
     }
 
     @GetMapping("api/items/{item_name}")
     public Item getItemByName(@PathVariable("item_name") String name){
-        System.out.println("In get/{id} section");
         return itemDatabase.getItemByName(name);
     }
 
     @PostMapping("api/items")
     public void addItem(@RequestBody Item newItem) {
-        System.out.println("In add section");
         itemDatabase.addItem(newItem);
     }
 
     @PutMapping("api/items")
     public void updateItemByName(@RequestBody Item updatedItem) {
-        System.out.println("In put section");
         itemDatabase.updateItemByName(updatedItem); 
     }
 
     @DeleteMapping("api/items/{item_name}")
     public void deleteItemByName(@PathVariable("item_name") String name) {
-        System.out.println("In delete section");
         itemDatabase.deleteItemByName(name);
     }
 
